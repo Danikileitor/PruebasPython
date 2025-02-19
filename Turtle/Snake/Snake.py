@@ -120,9 +120,15 @@ def actualizarCuerpo():
 def muerte():
     snake.viva = False
     snake.direction = "stop"
-    time.sleep(2)
+    gameover.goto(0, 14)
     gameover.write(
-        "Fin del juego\nPulsa [espacio] para volver a jugar",
+        "Fin del juego",
+        align="center",
+        font=("verdana", 24, "normal"),
+    )
+    gameover.goto(0, -14)
+    gameover.write(
+        "Pulsa [espacio] para volver a jugar",
         align="center",
         font=("verdana", 24, "normal"),
     )
@@ -132,6 +138,8 @@ def reinicio():
     if not snake.viva:
         global puntos
         puntos = int(0)
+        texto.clear()
+        gameover.clear()
         texto.write(
             "Puntuación: {}\tMáxima puntuación: {}".format(puntos, puntos_max),
             align="center",
@@ -144,7 +152,6 @@ def reinicio():
         snake.speed(0)
         snake.home()
         snake.speed(1)
-        gameover.clear()
         snake.viva = True
 
 
@@ -188,6 +195,7 @@ s.onkeypress(abajo, "Down")
 s.onkeypress(derecha, "Right")
 s.onkeypress(izquierda, "Left")
 s.onkeypress(reinicio, "space")
+s.onkeypress(muerte, "F")
 generarComida()
 
 while True:
