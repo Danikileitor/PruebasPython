@@ -15,19 +15,19 @@ s.setup(ancho, alto)
 s.title("Snake")
 s.bgcolor("whitesmoke")
 
-snake = turtle.Turtle()
+snake = turtle.Turtle("square")
 snake.speed(1)
-snake.shape("square")
 snake.color("green")
 snake.penup()
 snake.home()
 snake.direction = "stop"
 
-comida = turtle.Turtle()
-comida.shape("circle")
+comida = turtle.Turtle("circle")
 comida.color("orange")
 comida.penup()
 comida.speed(0)
+
+cuerpo = []
 
 
 def generarComida():
@@ -35,6 +35,24 @@ def generarComida():
         random.randint(-bordeX + 50, bordeX - 50),
         random.randint(-bordeY + 50, bordeY - 50),
     )
+
+
+def crecer():
+    c = turtle.Turtle("square", 1000, False)
+    c.color("green")
+    c.penup()
+    c.speed(0)
+    cuerpo.append(c)
+
+
+def actualizarCuerpo():
+    longitud = len(cuerpo)
+    for i in range(longitud - 1, 0, -1):
+        cuerpo[i].goto(cuerpo[i - 1].xcor(), cuerpo[i - 1].ycor())
+        cuerpo[i].showturtle()
+    if longitud > 0:
+        cuerpo[0].goto(snake.xcor(), snake.ycor())
+        cuerpo[0].showturtle()
 
 
 def arriba():
@@ -79,7 +97,9 @@ while True:
 
     if snake.distance(comida) < 20:
         generarComida()
+        crecer()
 
+    actualizarCuerpo()
     movimiento()
     time.sleep(retraso)
 
