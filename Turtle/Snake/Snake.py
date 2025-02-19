@@ -75,6 +75,11 @@ texto.write(
     font=("verdana", 24, "normal"),
 )
 
+gameover = turtle.Turtle("square", 1000, False)
+gameover.speed(0)
+gameover.color("black")
+gameover.penup()
+
 
 def generarComida():
     comida.goto(
@@ -116,6 +121,11 @@ def muerte():
     snake.viva = False
     snake.direction = "stop"
     time.sleep(2)
+    gameover.write(
+        "Fin del juego\nPulsa [espacio] para volver a jugar",
+        align="center",
+        font=("verdana", 24, "normal"),
+    )
 
 
 def reinicio():
@@ -134,6 +144,7 @@ def reinicio():
         snake.speed(0)
         snake.home()
         snake.speed(1)
+        gameover.clear()
         snake.viva = True
 
 
