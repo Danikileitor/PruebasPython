@@ -15,6 +15,40 @@ s.setup(ancho, alto)
 s.title("Snake")
 s.bgcolor("whitesmoke")
 
+bordeUp = turtle.Turtle("square", 1000, False)
+bordeUp.penup()
+bordeUp.pencolor("black")
+bordeUp.speed(0)
+bordeUp.goto(-bordeX + 10, bordeY - 10)
+bordeUp.pendown()
+bordeUp.fd(ancho - 20)
+
+bordeDown = turtle.Turtle("square", 1000, False)
+bordeDown.penup()
+bordeDown.pencolor("black")
+bordeDown.speed(0)
+bordeDown.goto(-bordeX + 10, -bordeY + 10)
+bordeDown.pendown()
+bordeDown.fd(ancho - 20)
+
+bordeRight = turtle.Turtle("square", 1000, False)
+bordeRight.penup()
+bordeRight.pencolor("black")
+bordeRight.speed(0)
+bordeRight.goto(bordeX - 10, -bordeY + 10)
+bordeRight.pendown()
+bordeRight.lt(90)
+bordeRight.fd(alto - 20)
+
+bordeLeft = turtle.Turtle("square", 1000, False)
+bordeLeft.penup()
+bordeLeft.pencolor("black")
+bordeLeft.speed(0)
+bordeLeft.goto(-bordeX + 10, -bordeY + 10)
+bordeLeft.pendown()
+bordeLeft.lt(90)
+bordeLeft.fd(alto - 20)
+
 snake = turtle.Turtle("square")
 snake.speed(1)
 snake.color("green")
@@ -94,6 +128,26 @@ generarComida()
 
 while True:
     s.update()
+
+    if snake.ycor() > bordeUp.ycor():
+        snake.speed(0)
+        snake.goto(snake.xcor(), bordeDown.ycor())
+        snake.speed(1)
+
+    if snake.ycor() < bordeDown.ycor():
+        snake.speed(0)
+        snake.goto(snake.xcor(), bordeUp.ycor())
+        snake.speed(1)
+
+    if snake.xcor() > bordeRight.xcor():
+        snake.speed(0)
+        snake.goto(bordeLeft.xcor(), snake.ycor())
+        snake.speed(1)
+
+    if snake.xcor() < bordeLeft.xcor():
+        snake.speed(0)
+        snake.goto(bordeRight.xcor(), snake.ycor())
+        snake.speed(1)
 
     if snake.distance(comida) < 20:
         generarComida()
