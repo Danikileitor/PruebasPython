@@ -3,8 +3,8 @@ import time
 import random
 
 retraso = 0.1
-puntos = 0
-puntos_max = 0
+puntos = int(0)
+puntos_max = int(0)
 ancho = int(1024)
 alto = int(720)
 bordeX = int(ancho / 2)
@@ -54,6 +54,7 @@ snake.speed(1)
 snake.color("green")
 snake.penup()
 snake.home()
+snake.viva = True
 snake.direction = "stop"
 
 comida = turtle.Turtle("circle")
@@ -76,7 +77,12 @@ def crecer():
     c.color("green")
     c.penup()
     c.speed(0)
+    global puntos
+    global puntos_max
     cuerpo.append(c)
+    puntos += 1
+    if puntos > puntos_max:
+        puntos_max = puntos
 
 
 def actualizarCuerpo():
@@ -89,20 +95,33 @@ def actualizarCuerpo():
         cuerpo[0].showturtle()
 
 
+def muerte():
+    snake.viva = False
+    snake.direction = "stop"
+    for i in cuerpo:
+        i.clear()
+        i.hideturtle()
+    cuerpo.clear()
+
+
 def arriba():
-    snake.direction = "up"
+    if snake.viva:
+        snake.direction = "up"
 
 
 def abajo():
-    snake.direction = "down"
+    if snake.viva:
+        snake.direction = "down"
 
 
 def derecha():
-    snake.direction = "right"
+    if snake.viva:
+        snake.direction = "right"
 
 
 def izquierda():
-    snake.direction = "left"
+    if snake.viva:
+        snake.direction = "left"
 
 
 def movimiento():
@@ -155,6 +174,11 @@ while True:
 
     actualizarCuerpo()
     movimiento()
+
+    for i in cuerpo:
+        if i.distance(snake) < 20:
+            muerte()
+
     time.sleep(retraso)
 
 turtle.done()
