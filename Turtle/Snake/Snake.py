@@ -5,9 +5,13 @@ import random
 retraso = 0.1
 puntos = 0
 puntos_max = 0
+ancho = int(1024)
+alto = int(720)
+bordeX = int(ancho / 2)
+bordeY = int(alto / 2)
 
 s = turtle.Screen()
-s.setup(1024, 720)
+s.setup(ancho, alto)
 s.title("Snake")
 s.bgcolor("whitesmoke")
 
@@ -18,6 +22,19 @@ snake.color("green")
 snake.penup()
 snake.home()
 snake.direction = "stop"
+
+comida = turtle.Turtle()
+comida.shape("circle")
+comida.color("orange")
+comida.penup()
+comida.speed(0)
+
+
+def generarComida():
+    comida.goto(
+        random.randint(-bordeX + 50, bordeX - 50),
+        random.randint(-bordeY + 50, bordeY - 50),
+    )
 
 
 def arriba():
@@ -55,9 +72,14 @@ s.onkeypress(arriba, "Up")
 s.onkeypress(abajo, "Down")
 s.onkeypress(derecha, "Right")
 s.onkeypress(izquierda, "Left")
+generarComida()
 
 while True:
     s.update()
+
+    if snake.distance(comida) < 20:
+        generarComida()
+
     movimiento()
     time.sleep(retraso)
 
