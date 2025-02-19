@@ -19,7 +19,7 @@ bordeUp = turtle.Turtle("square", 1000, False)
 bordeUp.penup()
 bordeUp.pencolor("black")
 bordeUp.speed(0)
-bordeUp.goto(-bordeX + 10, bordeY - 10)
+bordeUp.goto(-bordeX + 10, bordeY - 50)
 bordeUp.pendown()
 bordeUp.fd(ancho - 20)
 
@@ -38,7 +38,7 @@ bordeRight.speed(0)
 bordeRight.goto(bordeX - 10, -bordeY + 10)
 bordeRight.pendown()
 bordeRight.lt(90)
-bordeRight.fd(alto - 20)
+bordeRight.fd(alto - 60)
 
 bordeLeft = turtle.Turtle("square", 1000, False)
 bordeLeft.penup()
@@ -47,7 +47,7 @@ bordeLeft.speed(0)
 bordeLeft.goto(-bordeX + 10, -bordeY + 10)
 bordeLeft.pendown()
 bordeLeft.lt(90)
-bordeLeft.fd(alto - 20)
+bordeLeft.fd(alto - 60)
 
 snake = turtle.Turtle("square")
 snake.speed(1)
@@ -63,6 +63,17 @@ comida.penup()
 comida.speed(0)
 
 cuerpo = []
+
+texto = turtle.Turtle("square", 1000, False)
+texto.speed(0)
+texto.color("black")
+texto.penup()
+texto.goto(0, bordeY - 45)
+texto.write(
+    "Puntuación: {}\tMáxima puntuación: {}".format(puntos, puntos_max),
+    align="center",
+    font=("verdana", 24, "normal"),
+)
 
 
 def generarComida():
@@ -83,6 +94,12 @@ def crecer():
     puntos += 1
     if puntos > puntos_max:
         puntos_max = puntos
+    texto.clear()
+    texto.write(
+        "Puntuación: {}\tMáxima puntuación: {}".format(puntos, puntos_max),
+        align="center",
+        font=("verdana", 24, "normal"),
+    )
 
 
 def actualizarCuerpo():
@@ -98,10 +115,26 @@ def actualizarCuerpo():
 def muerte():
     snake.viva = False
     snake.direction = "stop"
-    for i in cuerpo:
-        i.clear()
-        i.hideturtle()
-    cuerpo.clear()
+    time.sleep(2)
+
+
+def reinicio():
+    if not snake.viva:
+        global puntos
+        puntos = int(0)
+        texto.write(
+            "Puntuación: {}\tMáxima puntuación: {}".format(puntos, puntos_max),
+            align="center",
+            font=("verdana", 24, "normal"),
+        )
+        for i in cuerpo:
+            i.clear()
+            i.hideturtle()
+        cuerpo.clear()
+        snake.speed(0)
+        snake.home()
+        snake.speed(1)
+        snake.viva = True
 
 
 def arriba():
@@ -143,6 +176,7 @@ s.onkeypress(arriba, "Up")
 s.onkeypress(abajo, "Down")
 s.onkeypress(derecha, "Right")
 s.onkeypress(izquierda, "Left")
+s.onkeypress(reinicio, "space")
 generarComida()
 
 while True:
