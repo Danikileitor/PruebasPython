@@ -10,7 +10,7 @@ FPS = 60
 class player(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.image = pygame.image.load("assets/sprites/nave.png").convert()
+        self.image = pygame.image.load("assets/sprites/nave.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (ANCHO / 2, ALTO - 50)
 
