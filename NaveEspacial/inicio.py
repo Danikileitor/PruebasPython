@@ -37,14 +37,14 @@ class player(pygame.sprite.Sprite):
         self.rect.x += self.velocidad_x
         self.rect.y += self.velocidad_y
 
-        if self.rect.x < 0:
-            self.rect.x = 0
-        if self.rect.x > ANCHO - self.rect.width:
-            self.rect.x = ANCHO - self.rect.width
-        if self.rect.y < 0:
-            self.rect.y = 0
-        if self.rect.y > ALTO - self.rect.height:
-            self.rect.y = ALTO - self.rect.height
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > ANCHO:
+            self.rect.right = ANCHO
+        if self.rect.top < 0:
+            self.rect.top = 0
+        if self.rect.bottom > ALTO:
+            self.rect.bottom = ALTO
 
 
 # Clase de inicio
