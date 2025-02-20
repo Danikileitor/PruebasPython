@@ -1,4 +1,5 @@
 import pygame
+from enemy import enemy
 
 # Configuración
 ANCHO_BASE = 1024
@@ -67,6 +68,10 @@ Jugador = pygame.sprite.Group()
 nave = player()
 Jugador.add(nave)
 
+Enemigos = pygame.sprite.Group()
+ovni = enemy()
+Enemigos.add(ovni)
+
 # Ciclo de vida
 ejecutando = True
 while ejecutando:
@@ -85,4 +90,5 @@ while ejecutando:
             ejecutando = False
     Jugador.update()
     Jugador.draw(pantalla)
+    Enemigos.draw(pantalla)
     pygame.display.flip()
