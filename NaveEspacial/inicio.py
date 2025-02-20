@@ -1,9 +1,13 @@
 import pygame
 
 # Configuración
-ANCHO = 1024
-ALTO = 720
+ANCHO_BASE = 1024
+ALTO_BASE = 720
 FPS = 60
+pantalla = pygame.display.set_mode((ANCHO_BASE, ALTO_BASE))
+ventana = pygame.display.Info()
+ANCHO = ventana.current_w
+ALTO = ventana.current_h
 
 
 # Clase de nave
@@ -49,9 +53,9 @@ class inicio:
 
 
 # Dibujamos la pantalla
-pantalla = pygame.display.set_mode((ANCHO, ALTO))
 fondo = pygame.transform.scale(
-    pygame.image.load("assets/fondos/espacio.jpg").convert(), (ANCHO, ALTO)
+    pygame.image.load("assets/fondos/espacio.jpg").convert(),
+    (ANCHO, ALTO),
 )
 pygame.display.set_caption("Navecilla")
 
@@ -67,6 +71,14 @@ Jugador.add(nave)
 ejecutando = True
 while ejecutando:
     clock.tick(FPS)
+    if pygame.WINDOWSIZECHANGED:
+        ventana = pygame.display.Info()
+        ANCHO = ventana.current_w
+        ALTO = ventana.current_h
+        fondo = pygame.transform.scale(
+            pygame.image.load("assets/fondos/espacio.jpg").convert(),
+            (ANCHO, ALTO),
+        )
     pantalla.blit(fondo, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
