@@ -13,6 +13,34 @@ class player(pygame.sprite.Sprite):
         self.image = pygame.image.load("assets/sprites/nave.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (ANCHO / 2, ALTO - 50)
+        self.velocidad_x = 0
+        self.velocidad_y = 0
+
+    def update(self):
+        self.velocidad_x = 0
+        self.velocidad_y = 0
+
+        teclas = pygame.key.get_pressed()
+        if teclas[pygame.K_w]:
+            self.velocidad_y = -10
+        if teclas[pygame.K_a]:
+            self.velocidad_x = -10
+        if teclas[pygame.K_s]:
+            self.velocidad_y = 10
+        if teclas[pygame.K_d]:
+            self.velocidad_x = 10
+
+        self.rect.x += self.velocidad_x
+        self.rect.y += self.velocidad_y
+
+        if self.rect.x < 0:
+            self.rect.x = 0
+        if self.rect.x > ANCHO - self.rect.width:
+            self.rect.x = ANCHO - self.rect.width
+        if self.rect.y < 0:
+            self.rect.y = 0
+        if self.rect.y > ALTO - self.rect.height:
+            self.rect.y = ALTO - self.rect.height
 
 
 # Clase de inicio
@@ -43,5 +71,6 @@ while ejecutando:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             ejecutando = False
+    Jugador.update()
     Jugador.draw(pantalla)
     pygame.display.flip()
