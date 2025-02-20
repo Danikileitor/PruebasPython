@@ -1,4 +1,5 @@
 import pygame
+import random
 
 ANCHO_BASE = 1024
 ALTO_BASE = 720
@@ -16,6 +17,8 @@ class enemy(pygame.sprite.Sprite):
         super().__init__(*groups)
         self.image = pygame.image.load("assets/sprites/ovni.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = ANCHO / ALTO
+        self.rect.center = (ANCHO / 2, ALTO / 4 / 2)
+        self.rect.x = random.randrange(ANCHO - self.rect.width)
+        self.rect.y = random.randrange(int(ALTO / 4) - self.rect.height)
         self.velocidad_x = 0
         self.velocidad_y = 0
