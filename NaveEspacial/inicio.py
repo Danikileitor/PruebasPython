@@ -69,7 +69,7 @@ nave = player()
 Jugador.add(nave)
 
 Enemigos = pygame.sprite.Group()
-ovni = enemy()
+ovni = enemy(ANCHO=ANCHO, ALTO=ALTO)
 Enemigos.add(ovni)
 
 # Ciclo de vida

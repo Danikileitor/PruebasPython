@@ -12,10 +12,10 @@ AZUL = (0, 0, 255)
 
 
 class enemy(pygame.sprite.Sprite):
-    def __init__(self, *groups):
+    def __init__(self, *groups, ANCHO, ALTO):
         super().__init__(*groups)
         self.image = pygame.image.load("assets/sprites/ovni.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = (ANCHO_BASE / 2, 50)
+        self.rect.center = ANCHO / ALTO
         self.velocidad_x = 0
         self.velocidad_y = 0
