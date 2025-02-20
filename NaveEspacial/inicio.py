@@ -6,6 +6,15 @@ ALTO = 720
 FPS = 60
 
 
+# Clase de nave
+class player(pygame.sprite.Sprite):
+    def __init__(self, *groups):
+        super().__init__(*groups)
+        self.image = pygame.image.load("assets/sprites/nave.png")
+        self.rect = self.image.get_rect()
+        self.rect.center = (ANCHO / 2, ALTO - 50)
+
+
 # Clase de inicio
 class inicio:
     pygame.init()
@@ -21,6 +30,11 @@ pygame.display.set_caption("Navecilla")
 # Establecer FPS
 clock = pygame.time.Clock()
 
+# Sprites
+Jugador = pygame.sprite.Group()
+nave = player()
+Jugador.add(nave)
+
 # Ciclo de vida
 ejecutando = True
 while ejecutando:
@@ -29,5 +43,5 @@ while ejecutando:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             ejecutando = False
-
+    Jugador.draw(pantalla)
     pygame.display.flip()
