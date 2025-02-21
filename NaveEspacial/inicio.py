@@ -1,5 +1,6 @@
 import pygame
-from enemy import enemy
+from enemy import Enemy
+from disparo import Disparo
 
 # Configuración
 ANCHO_BASE = 1024
@@ -12,7 +13,7 @@ ALTO = ventana.current_h
 
 
 # Clase de nave
-class player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
         self.image = pygame.image.load("assets/sprites/nave.png").convert_alpha()
@@ -66,7 +67,7 @@ clock = pygame.time.Clock()
 
 # Sprites
 Jugador = pygame.sprite.Group()
-nave = player()
+nave = Player()
 Jugador.add(nave)
 
 Enemigos = pygame.sprite.Group()
@@ -92,7 +93,7 @@ while ejecutando:
 
     if not Enemigos:
         for x in range(5):
-            ovni = enemy(ANCHO=ANCHO, ALTO=ALTO)
+            ovni = Enemy(ANCHO=ANCHO, ALTO=ALTO)
             Enemigos.add(ovni)
 
     Jugador.draw(pantalla)
