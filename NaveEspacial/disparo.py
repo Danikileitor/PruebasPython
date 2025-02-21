@@ -1,7 +1,7 @@
 import pygame
-from inicio import ANCHO_BASE
-from inicio import ALTO_BASE
-from color import Color
+# from inicio import ANCHO_BASE
+# from inicio import ALTO_BASE
+# from color import Color
 
 
 class Disparo(pygame.sprite.Sprite):

@@ -28,14 +28,16 @@ class Player(pygame.sprite.Sprite):
         self.velocidad_y = 0
 
         teclas = pygame.key.get_pressed()
-        if teclas[pygame.K_w]:
+        if teclas[pygame.K_w] or teclas[pygame.K_UP]:
             self.velocidad_y = -self.velocidad
-        if teclas[pygame.K_a]:
+        if teclas[pygame.K_a] or teclas[pygame.K_LEFT]:
             self.velocidad_x = -self.velocidad
-        if teclas[pygame.K_s]:
+        if teclas[pygame.K_s] or teclas[pygame.K_DOWN]:
             self.velocidad_y = self.velocidad
-        if teclas[pygame.K_d]:
+        if teclas[pygame.K_d] or teclas[pygame.K_RIGHT]:
             self.velocidad_x = self.velocidad
+        if teclas[pygame.K_SPACE]:
+            self.disparar()
 
         self.rect.x += self.velocidad_x
         self.rect.y += self.velocidad_y
@@ -48,6 +50,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.top = 0
         if self.rect.bottom > ALTO:
             self.rect.bottom = ALTO
+
+    def disparar(self):
+        disparo = Disparo(x=self.rect.centerx, y=self.rect.centery)
+        Disparos.add(disparo)
 
 
 # Clase de inicio
@@ -69,7 +75,7 @@ clock = pygame.time.Clock()
 Jugador = pygame.sprite.Group()
 nave = Player()
 Jugador.add(nave)
-
+Disparos = pygame.sprite.Group()
 Enemigos = pygame.sprite.Group()
 
 # Ciclo de vida
@@ -98,4 +104,5 @@ while ejecutando:
 
     Jugador.draw(pantalla)
     Enemigos.draw(pantalla)
+    Disparos.draw(pantalla)
     pygame.display.flip()

@@ -1,8 +1,5 @@
 import pygame
 import random
-from inicio import ANCHO_BASE
-from inicio import ALTO_BASE
-from color import Color
 
 
 class Enemy(pygame.sprite.Sprite):
