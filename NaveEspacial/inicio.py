@@ -70,8 +70,6 @@ nave = player()
 Jugador.add(nave)
 
 Enemigos = pygame.sprite.Group()
-ovni = enemy(ANCHO=ANCHO, ALTO=ALTO)
-Enemigos.add(ovni)
 
 # Ciclo de vida
 ejecutando = True
@@ -90,7 +88,13 @@ while ejecutando:
         if event.type == pygame.QUIT:
             ejecutando = False
     Jugador.update()
-    Jugador.draw(pantalla)
     Enemigos.update()
+
+    if not Enemigos:
+        for x in range(5):
+            ovni = enemy(ANCHO=ANCHO, ALTO=ALTO)
+            Enemigos.add(ovni)
+
+    Jugador.draw(pantalla)
     Enemigos.draw(pantalla)
     pygame.display.flip()
