@@ -52,7 +52,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = ALTO
 
     def disparar(self):
-        disparo = Disparo(x=self.rect.centerx, y=self.rect.centery)
+        disparo = Disparo(x=self.rect.centerx, y=self.rect.top)
         Disparos.add(disparo)
 
 
@@ -96,6 +96,7 @@ while ejecutando:
             ejecutando = False
     Jugador.update()
     Enemigos.update()
+    Disparos.update()
 
     if not Enemigos:
         for x in range(5):

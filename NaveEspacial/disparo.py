@@ -9,7 +9,7 @@ class Disparo(pygame.sprite.Sprite):
         super().__init__(*groups)
         self.image = pygame.image.load("assets/sprites/disparo.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.bottom = y
+        self.rect.centery = y
         self.rect.centerx = x
 
     def update(self):
