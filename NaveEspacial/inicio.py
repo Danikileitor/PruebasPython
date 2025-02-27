@@ -24,6 +24,8 @@ class Player(pygame.sprite.Sprite):
         self.velocidad = 5
         self.velocidad_x = 0
         self.velocidad_y = 0
+        self.cadencia = 300
+        self.last = pygame.time.get_ticks()
 
     def update(self):
         self.velocidad_x = 0
@@ -38,7 +40,10 @@ class Player(pygame.sprite.Sprite):
             self.velocidad_y = self.velocidad
         if teclas[pygame.K_d] or teclas[pygame.K_RIGHT]:
             self.velocidad_x = self.velocidad
-        if teclas[pygame.K_SPACE]:
+        if (
+            teclas[pygame.K_SPACE]
+            and pygame.time.get_ticks() - self.last >= self.cadencia
+        ):
             self.disparar()
 
         self.rect.x += self.velocidad_x
@@ -58,6 +63,7 @@ class Player(pygame.sprite.Sprite):
         sonido = pygame.mixer.Sound(Sonido.disparo.value)
         Disparos.add(disparo)
         sonido.play()
+        self.last = pygame.time.get_ticks()
 
 
 # Clase de inicio
