@@ -85,12 +85,20 @@ class Puntuación:
     def __init__(self, puntos, fuente, color, tamaño, x, y):
         self.puntos = puntos
         self.font = pygame.font.Font(pygame.font.match_font(fuente), tamaño)
-        self.render = self.font.render(str(self.puntos), True, color.value)
+        self.color = color.value
+        self.pos = (x, y)
+        self.render = self.font.render(str(self.puntos), True, self.color)
         self.rect = self.render.get_rect()
-        self.rect.topright = (x, y)
+        self.rect.topright = self.pos
 
     def draw(self, pantalla):
         pantalla.blit(self.render, self.rect)
+
+    def update(self, puntos):
+        self.puntos += puntos
+        self.render = self.font.render(str(self.puntos), True, self.color)
+        self.rect = self.render.get_rect()
+        self.rect.topright = self.pos
 
 
 puntuación = Puntuación(0, "Times", Color.BLANCO, 50, ANCHO - 10, 10)
@@ -111,7 +119,6 @@ while ejecutando:
         if event.type == pygame.QUIT:
             ejecutando = False
 
-    puntuación.draw(pantalla)
     Jugador.update()
     Enemigos.update()
     Disparos.update()
@@ -119,6 +126,9 @@ while ejecutando:
     # Colisiones
     colision_nave = pygame.sprite.groupcollide(Enemigos, Jugador, False, False)
     colision_bala = pygame.sprite.groupcollide(Enemigos, Disparos, True, True)
+
+    if colision_bala:
+        puntuación.update(1)
 
     if colision_nave:
         nave.kill()
@@ -128,6 +138,7 @@ while ejecutando:
             ovni = Enemy(ANCHO=ANCHO, ALTO=ALTO)
             Enemigos.add(ovni)
 
+    puntuación.draw(pantalla)
     Jugador.draw(pantalla)
     Enemigos.draw(pantalla)
     Disparos.draw(pantalla)
