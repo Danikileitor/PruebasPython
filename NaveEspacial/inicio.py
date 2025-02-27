@@ -98,6 +98,13 @@ while ejecutando:
     Enemigos.update()
     Disparos.update()
 
+    # Colisiones
+    colision_nave = pygame.sprite.groupcollide(Enemigos, Jugador, False, False)
+    colision_bala = pygame.sprite.groupcollide(Enemigos, Disparos, True, True)
+
+    if colision_nave:
+        nave.kill()
+
     if not Enemigos:
         for x in range(5):
             ovni = Enemy(ANCHO=ANCHO, ALTO=ALTO)
