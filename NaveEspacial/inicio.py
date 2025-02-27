@@ -8,7 +8,7 @@ from disparo import Disparo
 ANCHO_BASE = 1024
 ALTO_BASE = 720
 FPS = 60
-pantalla = pygame.display.set_mode((ANCHO_BASE, ALTO_BASE))
+pantalla = pygame.display.set_mode((ANCHO_BASE, ALTO_BASE), display=1)
 ventana = pygame.display.Info()
 ANCHO = ventana.current_w
 ALTO = ventana.current_h
