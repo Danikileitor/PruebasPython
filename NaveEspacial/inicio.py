@@ -1,7 +1,8 @@
 import pygame
+from color import Color
+from audio import Sonido, Musica
 from enemy import Enemy
 from disparo import Disparo
-from color import Color
 
 # Configuración
 ANCHO_BASE = 1024
@@ -54,7 +55,9 @@ class Player(pygame.sprite.Sprite):
 
     def disparar(self):
         disparo = Disparo(x=self.rect.centerx, y=self.rect.top)
+        sonido = pygame.mixer.Sound(Sonido.disparo.value)
         Disparos.add(disparo)
+        sonido.play()
 
 
 # Clase de inicio
@@ -79,6 +82,10 @@ Jugador.add(nave)
 Disparos = pygame.sprite.Group()
 Enemigos = pygame.sprite.Group()
 
+# Audio
+pygame.mixer.music.load(Musica.fondo.value)
+pygame.mixer.music.play(-1)
+
 
 # Texto en pantalla
 class Puntuación:
@@ -90,6 +97,7 @@ class Puntuación:
         self.render = self.font.render(str(self.puntos), True, self.color)
         self.rect = self.render.get_rect()
         self.rect.topright = self.pos
+        self.audio = pygame.mixer.Sound(Sonido.puntos.value)
 
     def draw(self, pantalla):
         pantalla.blit(self.render, self.rect)
@@ -99,6 +107,7 @@ class Puntuación:
         self.render = self.font.render(str(self.puntos), True, self.color)
         self.rect = self.render.get_rect()
         self.rect.topright = self.pos
+        self.audio.play()
 
 
 puntuación = Puntuación(0, "Times", Color.BLANCO, 50, ANCHO - 10, 10)
