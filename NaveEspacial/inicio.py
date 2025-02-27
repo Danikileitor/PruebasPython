@@ -1,6 +1,7 @@
 import pygame
 from enemy import Enemy
 from disparo import Disparo
+from color import Color
 
 # Configuración
 ANCHO_BASE = 1024
@@ -78,6 +79,21 @@ Jugador.add(nave)
 Disparos = pygame.sprite.Group()
 Enemigos = pygame.sprite.Group()
 
+
+# Texto en pantalla
+class Puntuación:
+    def __init__(self, puntos, fuente, color, tamaño, x, y):
+        self.puntos = puntos
+        self.font = pygame.font.Font(pygame.font.match_font(fuente), tamaño)
+        self.render = self.font.render(str(self.puntos), True, color.value)
+        self.rect = self.render.get_rect()
+        self.rect.topright = (x, y)
+
+    def draw(self, pantalla):
+        pantalla.blit(self.render, self.rect)
+
+
+puntuación = Puntuación(0, "Times", Color.BLANCO, 50, ANCHO - 10, 10)
 # Ciclo de vida
 ejecutando = True
 while ejecutando:
@@ -94,6 +110,8 @@ while ejecutando:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             ejecutando = False
+
+    puntuación.draw(pantalla)
     Jugador.update()
     Enemigos.update()
     Disparos.update()
